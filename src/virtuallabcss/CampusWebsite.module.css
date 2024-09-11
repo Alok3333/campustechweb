@@ -25,6 +25,10 @@
     color: #fff;
 }
 
+.signUpText {
+    text-decoration: none;
+}
+
 .atag:hover {
     transition: all .3s ease;
     color: #ff0000;

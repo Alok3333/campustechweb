@@ -39,6 +39,7 @@ import XIcon from "@mui/icons-material/X";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import YouTubeIcon from "@mui/icons-material/YouTube";
+import GoogleIcon from "@mui/icons-material/Google";
 import styles from "../virtuallabcss/CampusWebsite.module.css";
 
 const categoryData = [
@@ -78,7 +79,164 @@ const categoryData = [
 
 // Login Component
 export const LoginPage = () => {
-  return <>Login here</>;
+  return (
+    <Box
+      sx={{
+        backgroundColor: "#1343c7",
+        position: "relative",
+        overflow: "hidden",
+        marginX: "auto",
+        height: "100vh",
+      }}
+    >
+      {/* Background div behind the content */}
+      <div
+        style={{
+          position: "absolute",
+          maxWidth: "850px",
+          width: "100%",
+          height: "200vh",
+          backgroundColor: "#9fadf0",
+          right: "-170px",
+          top: "-150px",
+          rotate: "36deg",
+        }}
+        className="backgroundBox"
+      />
+
+      {/* Main content */}
+      <Container
+        maxWidth="xl"
+        sx={{
+          height: "100vh",
+          boxSizing: "border-box",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: { sm: "30px", md: "150px" },
+          marginX: "auto",
+          color: "white",
+          padding: "30px",
+          backgroundColor: "transparent",
+          width: { sm: "100%", md: "90%" },
+        }}
+      >
+        <Box
+          sx={{
+            width: "30%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Box
+            sx={{
+              padding: 4,
+              boxShadow: 3,
+              borderRadius: 2,
+              bgcolor: "background.paper",
+              zIndex: 1,
+            }}
+          >
+            <Typography variant="h4" align="center" gutterBottom color="black">
+              Login
+            </Typography>
+            <form>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    label="Username"
+                    variant="outlined"
+                    required
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    label="Password"
+                    variant="outlined"
+                    type="password"
+                    required
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    fullWidth
+                    sx={{ padding: 1.5 }}
+                  >
+                    Login
+                  </Button>
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography
+                    variant="body1"
+                    align="center"
+                    color="black"
+                    sx={{ mt: 2, mb: 1 }}
+                  >
+                    <small>
+                      Forgot{" "}
+                      <Link to="#" className={styles.signUpText}>
+                        Username
+                      </Link>
+                      /
+                      <Link to="#" className={styles.signUpText}>
+                        Password?
+                      </Link>
+                    </small>
+                    <br />
+                    <small>
+                      Don't have an account?{" "}
+                      <Link to="/signup" className={styles.signUpText}>
+                        Sign up now
+                      </Link>
+                    </small>
+                  </Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography
+                    variant="body1"
+                    align="center"
+                    color="black"
+                    sx={{ mt: 2, mb: 1 }}
+                  >
+                    Or login with
+                  </Typography>
+                </Grid>
+                {/* Login with Google */}
+                <Grid item xs={4} />
+                <Grid
+                  item
+                  xs={2}
+                  sx={{ display: "flex", justifyContent: "end" }}
+                >
+                  <a href="#" sx={{ mb: 1 }}>
+                    <GoogleIcon />
+                  </a>
+                </Grid>
+                {/* Login with Facebook */}
+                <Grid item xs={2}>
+                  <a href="#" sx={{ mb: 1 }}>
+                    <FacebookIcon />
+                  </a>
+                </Grid>
+                <Grid item xs={4} />
+              </Grid>
+            </form>
+          </Box>
+        </Box>
+        <Box sx={{ width: "45%", zIndex: 1, textAlign: { md: "right" } }}>
+          <Typography variant="h2" fontWeight="bold">
+            Access personalized learning and mentorship tools.
+          </Typography>
+        </Box>
+      </Container>
+    </Box>
+  );
 };
 
 export const ContactPage = () => {
@@ -173,9 +331,6 @@ export const ContactPage = () => {
                 Submit
               </Button>
             </form>
-            <small>
-              Already have an account? <Link to="/login">Login Here</Link>
-            </small>
           </>
         </Grid>
       </Grid>
@@ -630,7 +785,6 @@ const CategoryPage = () => {
 // };
 
 const drawerWidth = 240;
-const navItems = ["Home", "About", "Contact", "Login"];
 
 function CampusWebsite(props) {
   const navigate = useNavigate();
@@ -640,7 +794,7 @@ function CampusWebsite(props) {
 
   // State for subscribe button
   const [subscribeVal, setSubscribeVal] = useState();
-  const [isSubscribe, setIsSubscribe] = useState(false);
+  //   const [isSubscribe, setIsSubscribe] = useState(false);
 
   // Handle for subscript button
   const handleSubscribe = () => {
