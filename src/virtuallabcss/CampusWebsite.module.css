@@ -1,0 +1,31 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.aboutImage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 700px;
+    object-fit: contain;
+    padding-left: 80px;
+    padding-right: 80px;
+}
+
+.footerlogo {
+    padding: 16px;
+}
+
+.atag {
+    text-decoration: none;
+    text-transform: capitalize;
+    color: #fff;
+}
+
+.atag:hover {
+    transition: all .3s ease;
+    color: #ff0000;
+}
