@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import {
+  Card,
   Button,
   Box,
   Typography,
@@ -13,6 +14,11 @@ import {
   ListItemButton,
   ListItemText,
   Toolbar,
+  CardMedia,
+  CardContent,
+  CardActions,
+  ListItemIcon,
+  useMediaQuery,
   TextField,
   Stack,
 } from "@mui/material";
@@ -28,11 +34,13 @@ import InsightsIcon from "@mui/icons-material/Insights";
 import MenuIcon from "@mui/icons-material/Menu";
 import PropTypes from "prop-types";
 import CssBaseline from "@mui/material/CssBaseline";
-// importing react-slick for carousal
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { Link, Link as RouterLink } from "react-router-dom";
+import styles from "../virtuallabcss/CampusWebsite.module.css";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import { useTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import XIcon from "@mui/icons-material/X";
@@ -40,7 +48,6 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import GoogleIcon from "@mui/icons-material/Google";
-import styles from "../virtuallabcss/CampusWebsite.module.css";
 
 const categoryData = [
   {
@@ -239,6 +246,7 @@ export const LoginPage = () => {
   );
 };
 
+// Contact Us Component
 export const ContactPage = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -250,9 +258,9 @@ export const ContactPage = () => {
     console.log(firstName, lastName, email, phone);
   }
   return (
-    <Container maxWidth="xl" sx={{ my: 4 }}>
+    <Container maxWidth="xl" sx={{ my: 4, p: 4 }}>
       <Grid container spacing={0}>
-        <Grid xs={12} sm={12} md={6} xl={6}>
+        <Grid xs={12} sm={12} md={6} xl={6} sx={{ p: 4 }}>
           <Typography
             variant="h3"
             sx={{
@@ -345,17 +353,30 @@ const CarousalCard = ({ heading, subheading, image }) => {
         container
         spacing={2}
         sx={{
+          display: "flex",
+          alignItems: "center",
+          gap: "50px",
           color: "white",
           padding: "20px",
           paddingTop: "40px",
-          height: "400px",
+          height: "auto",
           position: "relative",
           zIndex: 10,
         }}
       >
-        <Grid size={5}>
-          <Typography variant="h2">{heading} </Typography>
-          <Typography variant="subtitle1">{subheading}</Typography>
+        <Grid item xs={12} md={5} sx={{ order: { xs: 2, md: 1 } }}>
+          <Typography
+            variant="h4"
+            sx={{ fontSize: { xs: "24px", md: "32px" }, fontWeight: 600 }}
+          >
+            {heading}
+          </Typography>
+          <Typography
+            variant="subtitle1"
+            sx={{ fontSize: { xs: "16px", md: "20px" } }}
+          >
+            {subheading}
+          </Typography>
           <Box sx={{ mt: 2 }}>
             <a
               href="/Login"
@@ -371,20 +392,23 @@ const CarousalCard = ({ heading, subheading, image }) => {
             >
               GET STARTED
             </a>
-            {/* <a href='/Login' style={{ backgroundColor: '#c811ed', color: '#fff', display: 'block', padding: 15, width: 150, fontSize:16, textDecoration: 'none'}}>GET STARTED</a> */}
-            {/* <Button variant="contained" color="success" sx={{ mr: 2 }}>
-                            How it helps
-                        </Button>
-                        <Button variant="contained" color="primary">
-                            Get Started
-                        </Button> */}
           </Box>
         </Grid>
-        <Grid size={1}></Grid>
-        <Grid size={6} sx={{ position: "absolute", top: "0", right: "0" }}>
+        <Grid
+          item
+          xs={12}
+          md={6}
+          sx={{
+            order: { xs: 1, md: 2 },
+            display: "flex",
+            justifyContent: { xs: "center", md: "flex-end" },
+            mt: { xs: 2, md: 0 },
+          }}
+        >
           <img
-            src="https://jadavpuruniversity.s3-ap-south-1.amazonaws.com/9-2024-10-535-h1.png"
+            src={image}
             alt="img"
+            style={{ maxWidth: "100%", height: "auto" }}
           />
         </Grid>
       </Grid>
@@ -401,11 +425,20 @@ function SimpleSlider() {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    arrows: false,
+    arrows: false, // We will manage the arrows manually
+    responsive: [
+      {
+        breakpoint: 768, // For tablet and mobile screens
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
   return (
-    <Box sx={{ position: "relative" }}>
+    <Box sx={{ position: "relative", width: "100%", overflow: "hidden" }}>
       <Slider ref={sliderRef} {...settings}>
         <CarousalCard
           heading="Generative AI for LMS and Accreditation"
@@ -413,33 +446,53 @@ function SimpleSlider() {
           image="https://jadavpuruniversity.s3-ap-south-1.amazonaws.com/9-2024-10-535-h1.png"
         />
         <CarousalCard
-          heading="LMS with Personalize Learning"
-          subheading="Generate course material to assignments to MCQ as per learning level of students."
+          heading="LMS with Personalized Learning"
+          subheading="Generate course material as per the learning level of students."
           image="https://jadavpuruniversity.s3-ap-south-1.amazonaws.com/9-2024-10-535-h1.png"
         />
         <CarousalCard
-          heading="Accreditation with AI assistants"
-          subheading="Collect documents, validate documents using AI, generate missing documents using AI."
+          heading="Accreditation with AI Assistants"
+          subheading="Collect documents, validate them using AI, and generate missing documents."
           image="https://jadavpuruniversity.s3-ap-south-1.amazonaws.com/9-2024-10-535-h1.png"
         />
       </Slider>
 
+      {/* Arrow buttons */}
       <Box
         sx={{
-          display: "flex",
           position: "absolute",
-          bottom: -50,
-          left: 100,
-          mt: 2,
+          top: "50%",
+          left: { xs: "10px", md: "30px" },
+          transform: "translateY(-50%)",
+          zIndex: 20,
         }}
       >
         <ArrowCircleLeftIcon
           onClick={() => sliderRef.current.slickPrev()}
-          sx={{ fontSize: 60, color: "cyan", cursor: "pointer" }}
+          sx={{
+            fontSize: { xs: 40, md: 60 },
+            color: "cyan",
+            cursor: "pointer",
+          }}
         />
+      </Box>
+
+      <Box
+        sx={{
+          position: "absolute",
+          top: "50%",
+          right: { xs: "10px", md: "30px" },
+          transform: "translateY(-50%)",
+          zIndex: 20,
+        }}
+      >
         <ArrowCircleRightIcon
           onClick={() => sliderRef.current.slickNext()}
-          sx={{ fontSize: 60, color: "cyan", cursor: "pointer" }}
+          sx={{
+            fontSize: { xs: 40, md: 60 },
+            color: "cyan",
+            cursor: "pointer",
+          }}
         />
       </Box>
     </Box>
@@ -779,17 +832,301 @@ const CategoryPage = () => {
   );
 };
 
-// const navigate2 = useNavigate();
-// const onButtonClicklogin2 = async() => {
-//     navigate2('/Login');
-// };
+function LazyLoad() {
+  const settings = {
+    dots: true,
+    lazyLoad: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    initialSlide: 2,
+  };
+  return (
+    <div className="slider-container">
+      <Slider {...settings}>
+        <PricingCardForMob
+          height="70vh"
+          cardtype="basic"
+          price="10.90"
+          features={[]}
+        />
+        <PricingCardForMob
+          height="70vh"
+          cardtype="best"
+          price="70.90"
+          features={[]}
+        />
+        <PricingCardForMob
+          height="70vh"
+          cardtype="advanced"
+          price="400.90"
+          features={[]}
+        />
+      </Slider>
+    </div>
+  );
+}
+
+const PricingCardForMob = ({ height, cardtype, price, features }) => {
+  return (
+    <Box
+      sx={{
+        width: "90vw",
+        display: "flex",
+        justifyContent: "center",
+        padding: "30px",
+        overflow: "hidden",
+      }}
+    >
+      <Card
+        className={styles.pricingCardMobile}
+        sx={{
+          margin: "auto",
+          height: height,
+          zIndex: cardtype === "best" ? 1 : 0,
+        }}
+      >
+        <CardContent sx={{ padding: 0 }}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              bgcolor: "#1343c7",
+              borderRadius: "0px 0px 100% 100% ",
+              height: "200px",
+              width: "100%",
+            }}
+          >
+            <Box
+              sx={{
+                color: "white",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexDirection: "column",
+              }}
+            >
+              <Typography
+                gutterBottom
+                variant="h5"
+                component="div"
+                fontWeight="bold"
+                textTransform="uppercase"
+              >
+                {cardtype}
+              </Typography>
+              <Typography
+                gutterBottom
+                variant="h4"
+                component="div"
+                fontWeight="bold"
+              >
+                <sup>$</sup> {price}
+              </Typography>
+              <Typography gutterBottom variant="subtitle2" component="div">
+                per month
+              </Typography>
+            </Box>
+          </Box>
+          <List sx={{ width: "300px", padding: "40px" }}>
+            <ListItem disablePadding>
+              <ListItemIcon>
+                <CheckCircleOutlineIcon />
+              </ListItemIcon>
+              <ListItemText primary="Feature 1" />
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemIcon>
+                <CheckCircleOutlineIcon />
+              </ListItemIcon>
+              <ListItemText primary="Feature 2" />
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemIcon>
+                <CheckCircleOutlineIcon />
+              </ListItemIcon>
+              <ListItemText primary="Feature 3" />
+            </ListItem>
+          </List>
+        </CardContent>
+        <CardActions
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Link to="#">
+            <Button size="small" variant="contained">
+              Choose Plan
+            </Button>
+          </Link>
+        </CardActions>
+      </Card>
+    </Box>
+  );
+};
+
+const PricingCard = ({ height, cardtype, price, features }) => {
+  return (
+    <Card
+      className={styles.pricingCard}
+      sx={{ height: "500px", zIndex: cardtype === "best" ? 1 : 0 }}
+    >
+      <CardContent sx={{ padding: 0 }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            bgcolor: "#1343c7",
+            borderRadius: "0px 0px 100% 100% ",
+            height: "200px",
+            width: "100%",
+          }}
+        >
+          <Box
+            sx={{
+              color: "white",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexDirection: "column",
+            }}
+          >
+            <Typography
+              gutterBottom
+              variant="h5"
+              component="div"
+              fontWeight="bold"
+              textTransform="uppercase"
+            >
+              {cardtype}
+            </Typography>
+            <Typography
+              gutterBottom
+              variant="h4"
+              component="div"
+              fontWeight="bold"
+            >
+              <sup>$</sup> {price}
+            </Typography>
+            <Typography gutterBottom variant="subtitle2" component="div">
+              per month
+            </Typography>
+          </Box>
+        </Box>
+        <List sx={{ width: "300px", height: "250px", padding: "30px" }}>
+          <ListItem disablePadding>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "10px",
+              }}
+            >
+              <CheckCircleOutlineIcon sx={{ color: "grey" }} />
+              <ListItemText primary="Feature 1" />
+            </Box>
+          </ListItem>
+          <ListItem disablePadding>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "10px",
+              }}
+            >
+              <CheckCircleOutlineIcon sx={{ color: "grey" }} />
+              <ListItemText primary="Feature 1" />
+            </Box>
+          </ListItem>
+          <ListItem disablePadding>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "10px",
+              }}
+            >
+              <CheckCircleOutlineIcon sx={{ color: "grey" }} />
+              <ListItemText primary="Feature 1" />
+            </Box>
+          </ListItem>
+        </List>
+      </CardContent>
+      <CardActions sx={{ display: "flex", justifyContent: "center" }}>
+        <Link to="#">
+          <Button size="small" variant="contained">
+            Choose Plan
+          </Button>
+        </Link>
+      </CardActions>
+    </Card>
+  );
+};
+
+const PricingPage = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // Checks for 'sm' breakpoint (600px and below)
+
+  return (
+    <Box sx={{ width: "100%" }}>
+      {isMobile ? (
+        <LazyLoad />
+      ) : (
+        <Container
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            gap: "10px",
+            alignItems: "center",
+            paddingBlock: "100px",
+          }}
+        >
+          <PricingCard
+            height="70vh"
+            cardtype="basic"
+            price="10.90"
+            features={[]}
+          />
+          <PricingCard
+            height="70vh"
+            cardtype="best"
+            price="70.90"
+            features={[]}
+          />
+          <PricingCard
+            height="70vh"
+            cardtype="advanced"
+            price="400.90"
+            features={[]}
+          />
+          <PricingCard
+            height="70vh"
+            cardtype="advanced"
+            price="400.90"
+            features={[]}
+          />
+        </Container>
+      )}
+    </Box>
+  );
+};
 
 const drawerWidth = 240;
+const navItems = ["Home", "About", "Contact", "Login"];
 
 function CampusWebsite(props) {
   const navigate = useNavigate();
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+
   const [scrolled, setScrolled] = useState(false);
 
   // State for subscribe button
@@ -972,7 +1309,6 @@ function CampusWebsite(props) {
           <AboutPage6 />
           <CategoryPage />
 
-          {/* About pages container */}
           <Container>
             <Box
               component="main"
@@ -1021,10 +1357,12 @@ function CampusWebsite(props) {
               </Box>
             </Box>
           </Container>
+          <PricingPage />
 
           {/* Contact page */}
           <ContactPage />
         </Box>
+
         {/* Footer Section*/}
         <Box sx={{ backgroundColor: "#0c0c0c", color: "#fff", p: 2 }}>
           <Container maxWidth="xl" sx={{ backgroundColor: "none", mt: 2 }}>
