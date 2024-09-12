@@ -1127,8 +1127,6 @@ function CampusWebsite(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
-  const [scrolled, setScrolled] = useState(false);
-
   // State for subscribe button
   const [subscribeVal, setSubscribeVal] = useState();
   //   const [isSubscribe, setIsSubscribe] = useState(false);
@@ -1182,10 +1180,8 @@ function CampusWebsite(props) {
       <AppBar
         component="nav"
         sx={{
-          background: scrolled ? "#333" : "none",
-          color: scrolled ? "#fff" : "#000",
-          transition: "background-color 0.3s ease-in-out",
-          backdropFilter: "blur(8px)",
+          backgroundColor: "#fff",
+          color: "#000",
         }}
       >
         <Toolbar>
@@ -1477,7 +1473,7 @@ function CampusWebsite(props) {
                 Offices
                 <Typography sx={{ mt: 1, textTransform: "none" }}>
                   www.Campus
-                  <Typography component="span" sx={{ color: "red" }}>
+                  <Typography component="span" sx={{ color: "#0091ff" }}>
                     Technology
                   </Typography>
                   .com
@@ -1497,9 +1493,10 @@ function CampusWebsite(props) {
                 }}
               >
                 Information
-                <Typography sx={{ mt: 0, textTransform: "none" }}>
-                  Readable content of a page when looking at its layoutreadable
-                  content of a page when looking at its layout.
+                <Typography sx={{ mt: 1, textTransform: "none" }}>
+                  Generative AI for LMS and Accreditation. Generate syllabus to
+                  course material to assignments. Validate documents. Generate
+                  course material as per the learning level of students.
                 </Typography>
               </Grid>
               <Grid
